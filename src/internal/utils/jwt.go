@@ -10,8 +10,10 @@ package utils
 
 import (
 	"errors"
+	"strings"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/mikietechie/gocurrenciesapi/internal/config"
 )
@@ -51,4 +53,10 @@ func VerifyToken(tokenString string) (*jwt.Token, error) {
 
 	// Return the verified token
 	return token, nil
+}
+
+func GetHeadersAuthBearerToken(c *gin.Context) string {
+	authorizationHeader := c.GetHeader("Authorization")
+	bearerToken := strings.Replace(authorizationHeader, "Bearer ", "", 1)
+	return bearerToken
 }

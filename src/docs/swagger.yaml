@@ -94,7 +94,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/structs.SecureResponse'
-      summary: Refresh
+      summary: Secure
       tags:
       - Auth
 securityDefinitions:

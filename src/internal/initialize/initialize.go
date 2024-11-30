@@ -20,7 +20,7 @@ func Init() {
 }
 
 func Tear() {
-	log.Println("Tearing down, will sleep for 30 seconds to allow go routines to finish")
-	time.Sleep(time.Second * 30)
+	log.Println("Tearing down, will sleep for 10 seconds to allow go routines to finish")
+	time.Sleep(time.Second * 10)
 	models.DisonnectDb()
 }

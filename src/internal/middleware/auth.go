@@ -11,7 +11,6 @@ package middleware
 import (
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mikietechie/gocurrenciesapi/internal/utils"
@@ -19,9 +18,8 @@ import (
 
 func WithAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		bearerToken := c.Request.Header.Get("Authorization")
-		token := strings.Replace(bearerToken, "Bearer ", "", 1)
-		verifiedToken, err := utils.VerifyToken(token)
+		bearerToken := utils.GetHeadersAuthBearerToken(c)
+		verifiedToken, err := utils.VerifyToken(bearerToken)
 		if err != nil {
 			log.Println("WithAuth ", err)
 			c.AbortWithError(http.StatusForbidden, err)

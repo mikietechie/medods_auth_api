@@ -9,15 +9,14 @@ Description			A Golang Auth API
 package controllers
 
 import (
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/mikietechie/gocurrenciesapi/internal/middleware"
 	"github.com/mikietechie/gocurrenciesapi/internal/services"
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
+	"github.com/mikietechie/gocurrenciesapi/internal/utils"
 )
 
 // Login         godoc
@@ -47,7 +46,7 @@ func Login(c *gin.Context) {
 // @Success      200      {object}  structs.RefreshResponse
 // @Router       /api/v1/auth/refresh [post]
 func Refresh(c *gin.Context) {
-	bearerToken := strings.Replace(c.GetHeader("Authorization"), "Bearer ", "", 1)
+	bearerToken := utils.GetHeadersAuthBearerToken(c)
 	body := structs.RefreshParameters{Token: bearerToken}
 	data, err := services.Refresh(body)
 	if err != nil {
@@ -57,8 +56,8 @@ func Refresh(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, data)
 }
 
-// Refresh       godoc
-// @Summary      Refresh
+// Secure       godoc
+// @Summary      Secure
 // @Description  Gets Credentials and Returns Auth Token
 // @Tags         Auth
 // @Produce      json
@@ -67,7 +66,6 @@ func Refresh(c *gin.Context) {
 // @Router       /api/v1/auth/secure [get]
 func Secure(c *gin.Context) {
 	token := c.Value("token").(jwt.Token)
-	fmt.Println(token.Claims)
 	subject, err := token.Claims.GetSubject()
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)

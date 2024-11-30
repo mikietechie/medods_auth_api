@@ -106,7 +106,7 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Refresh",
+                "summary": "Secure",
                 "parameters": [
                     {
                         "type": "string",

@@ -1,0 +1,106 @@
+definitions:
+  structs.LoginResponse:
+    properties:
+      refresh:
+        type: string
+      token:
+        type: string
+    type: object
+  structs.RefreshResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  structs.SecureResponse:
+    properties:
+      expiration:
+        type: string
+      subject:
+        type: string
+    type: object
+info:
+  contact:
+    email: mzinyoni7
+    name: Mike Zinyoni
+  description: Go Auth API
+  title: Go Auth API
+  version: "0.1"
+paths:
+  /api/v1:
+    get:
+      description: Gets Index
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Index
+      tags:
+      - Index
+  /api/v1/auth/login/{guid}:
+    post:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: structs.LoginParameters GUID
+        in: path
+        name: guid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structs.LoginResponse'
+      summary: Login
+      tags:
+      - Auth
+  /api/v1/auth/refresh:
+    post:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: 'Starts with Bearer '
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structs.RefreshResponse'
+      summary: Refresh
+      tags:
+      - Auth
+  /api/v1/auth/secure:
+    get:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: 'Starts with Bearer '
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structs.SecureResponse'
+      summary: Refresh
+      tags:
+      - Auth
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer " followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

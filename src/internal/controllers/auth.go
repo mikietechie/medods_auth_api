@@ -47,7 +47,7 @@ func Login(c *gin.Context) {
 // @Router       /api/v1/auth/refresh [post]
 func Refresh(c *gin.Context) {
 	bearerToken := utils.GetHeadersAuthBearerToken(c)
-	body := structs.RefreshParameters{Token: bearerToken}
+	body := structs.RefreshParameters{Refresh: bearerToken, Ip: c.ClientIP()}
 	data, err := services.Refresh(body)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)

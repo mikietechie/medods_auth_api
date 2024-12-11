@@ -19,7 +19,7 @@ type LoginParameters struct {
 }
 
 type RefreshParameters struct {
-	Token   string `json:"token"`
+	// Token   string `json:"token"`
 	Refresh string `json:"refresh"`
 	Ip      string `json:"ip"`
 }
